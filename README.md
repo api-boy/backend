@@ -23,7 +23,7 @@ The Frontend is implemented with [VueJS](https://vuejs.org/) and connects to Fir
 
 <img src="https://user-images.githubusercontent.com/8256604/68883480-e9578980-06ef-11ea-88b6-91fbee2a1336.gif" width="920" height="500">
 
-## Setup
+## Backend Setup
 
 ### Install `go`:
 
@@ -185,7 +185,7 @@ Configure the access rules for the _Realtime Database_ with the following code:
 }
 ```
 
-## Execution and Deployment
+## Backend Execution / Deployment
 
 ### Run development stage:
 
