@@ -1,0 +1,9 @@
+*.md
+*.go
+!.team
+src
+vendor
+go.mod
+go.sum
+Makefile
+team.json

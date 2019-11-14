@@ -1,0 +1,20 @@
+{
+  "name": "apiboy",
+  "profile": "apiboy",
+  "regions": ["us-east-2"],
+  "stages": {
+    "development": {
+      "proxy": {
+        "command": "export $(cat .team/development/env) && gin --port $PORT"
+      }
+    },
+    "production": {
+      "proxy": {
+        "command": "export $(cat .team/production/env) && ./server"
+      }
+    }
+  },
+  "error_pages": {
+    "disable": true
+  }
+}
