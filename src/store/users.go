@@ -17,6 +17,7 @@ type User struct {
 	Email    string `json:"email" firestore:"email"`
 	Password string `json:"-" firestore:"password"`
 	Role     string `json:"role" firestore:"role"`
+	TempCode string `json:"-" firestore:"temp_code"`
 	Created  *Event `json:"created" firestore:"created"`
 	Updated  *Event `json:"updated" firestore:"updated"`
 	Deleted  *Event `json:"deleted" firestore:"deleted"`
