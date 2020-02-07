@@ -11,6 +11,7 @@ type HTTPEndpoints struct {
 	LogoutEndpoint                 endpoint.Endpoint
 	SignupEndpoint                 endpoint.Endpoint
 	ResetPasswordEndpoint          endpoint.Endpoint
+	SetNewPasswordEndpoint         endpoint.Endpoint
 	UpdateUserEndpoint             endpoint.Endpoint
 	DeleteUserEndpoint             endpoint.Endpoint
 	CreateProjectEndpoint          endpoint.Endpoint
@@ -46,6 +47,7 @@ func MakeHTTPEndpoints(s *Service) HTTPEndpoints {
 		LogoutEndpoint:                 MakeLogoutEndpoint(s, vm, am),
 		SignupEndpoint:                 MakeSignupEndpoint(s, vm),
 		ResetPasswordEndpoint:          MakeResetPasswordEndpoint(s, vm),
+		SetNewPasswordEndpoint:         MakeSetNewPasswordEndpoint(s, vm),
 		UpdateUserEndpoint:             MakeUpdateUserEndpoint(s, vm, am),
 		DeleteUserEndpoint:             MakeDeleteUserEndpoint(s, vm, am),
 		CreateProjectEndpoint:          MakeCreateProjectEndpoint(s, vm, am),

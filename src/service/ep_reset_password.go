@@ -1,10 +1,13 @@
 package service
 
 import (
-	"context"
-	"strings"
-
 	"apiboy/backend/src/errors"
+	"context"
+	"fmt"
+	"strings"
+	"time"
+
+	"encoding/base64"
 
 	"github.com/go-kit/kit/endpoint"
 	"github.com/google/uuid"
@@ -31,11 +34,18 @@ func (s *Service) ResetPassword(ctx context.Context, input *ResetPasswordInput) 
 	if user == nil {
 		return nil, errors.Unauthorized{Msg: "Invalid user"}
 	}
+	timeNow := time.Now().UTC()
 
-	user.TempCode = uuid.New().String()
+	decode := user.ID + "|" + timeNow.Format(time.UnixDate) + "|" + uuid.New().String()
+
+	fmt.Print(decode)
+
+	encoded := base64.StdEncoding.EncodeToString([]byte(decode))
+
+	user.TempCode = encoded
 
 	if err = s.Store.UpdateUser(ctx, user.ID, user); err != nil {
-		return nil, errors.InternalServer{Msg: "Could not generate temp password", Err: err}
+		return nil, errors.InternalServer{Msg: "Could not generate temp code", Err: err}
 	}
 
 	return &ResetPasswordOutput{}, nil

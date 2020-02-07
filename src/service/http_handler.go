@@ -65,6 +65,13 @@ func MakeHTTPHandler(ctx context.Context, log *logger.Logger, e HTTPEndpoints) h
 		defaultOptions...,
 	)).Name("ResetPassword")
 
+	r.Methods("POST").Path("/auth/set_new_password").Handler(kithttp.NewServer(
+		e.SetNewPasswordEndpoint,
+		httputils.DecodeRPCRequest(&SetNewPasswordInput{}),
+		httputils.ResponseEncoder(log),
+		defaultOptions...,
+	)).Name("SetNewPassword")
+
 	r.Methods("POST").Path("/users/update").Handler(kithttp.NewServer(
 		e.UpdateUserEndpoint,
 		httputils.DecodeRPCRequest(&UpdateUserInput{}),
