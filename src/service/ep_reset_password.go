@@ -3,7 +3,6 @@ package service
 import (
 	"apiboy/backend/src/errors"
 	"context"
-	"fmt"
 	"strings"
 	"time"
 
@@ -38,11 +37,7 @@ func (s *Service) ResetPassword(ctx context.Context, input *ResetPasswordInput) 
 
 	decode := user.ID + "|" + timeNow.Format(time.UnixDate) + "|" + uuid.New().String()
 
-	fmt.Print(decode)
-
-	encoded := base64.StdEncoding.EncodeToString([]byte(decode))
-
-	user.TempCode = encoded
+	user.TempCode = base64.StdEncoding.EncodeToString([]byte(decode))
 
 	if err = s.Store.UpdateUser(ctx, user.ID, user); err != nil {
 		return nil, errors.InternalServer{Msg: "Could not generate temp code", Err: err}

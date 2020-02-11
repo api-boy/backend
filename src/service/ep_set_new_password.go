@@ -25,13 +25,10 @@ type SetNewPasswordOutput struct{}
 func (s *Service) SetNewPassword(ctx context.Context, input *SetNewPasswordInput) (*SetNewPasswordOutput, error) {
 	password := strings.TrimSpace(input.Password)
 	tempCode := strings.TrimSpace(input.TempCode)
-	fmt.Println("cade: " + tempCode)
 
 	decode, err := base64.StdEncoding.DecodeString(tempCode)
 	if err != nil {
 		fmt.Print("error:", err)
-	} else {
-		fmt.Printf("%q\n", decode)
 	}
 
 	elements := strings.Split(string(decode), "|")
@@ -39,21 +36,20 @@ func (s *Service) SetNewPassword(ctx context.Context, input *SetNewPasswordInput
 		return nil, errors.Unauthorized{Msg: "Invalid code"}
 	}
 
-	userID := elements[0]
-	timeCode := elements[1]
-	dtCode, err := time.Parse(time.UnixDate, timeCode)
+	strDateTimeCode := elements[1]
+	dateTimeCode, err := time.Parse(time.UnixDate, strDateTimeCode)
 	if err != nil { // Always check errors even if they should not happen.
 		return nil, errors.InternalServer{Msg: "Could not format date time", Err: err}
 	}
 
 	timeNow := time.Now().UTC()
-
-	hrs := timeNow.Sub(dtCode)
+	hrs := timeNow.Sub(dateTimeCode)
 
 	if hrs.Hours() > 24 {
 		return nil, errors.Unauthorized{Msg: "Invalid code"}
 	}
 
+	userID := elements[0]
 	// get user
 	user, err := s.Store.GetUserByID(ctx, userID)
 	if err != nil {
@@ -66,7 +62,7 @@ func (s *Service) SetNewPassword(ctx context.Context, input *SetNewPasswordInput
 		return nil, errors.Unauthorized{Msg: "Invalid code"}
 	}
 
-	// hash password
+	// hash new password
 	hashedPassword, err := authutils.HashPassword(password)
 	if err != nil {
 		return nil, errors.InternalServer{Msg: "Could not hash password", Err: err}
@@ -78,9 +74,6 @@ func (s *Service) SetNewPassword(ctx context.Context, input *SetNewPasswordInput
 	if err = s.Store.UpdateUser(ctx, user.ID, user); err != nil {
 		return nil, errors.InternalServer{Msg: "Could not update user", Err: err}
 	}
-	fmt.Print("Password actualizado")
-	fmt.Printf("%q\n", user.Password)
-	fmt.Printf("%q\n", password)
 
 	return &SetNewPasswordOutput{}, nil
 }
