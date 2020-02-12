@@ -5,7 +5,6 @@ import (
 	"apiboy/backend/src/errors"
 	"context"
 	"encoding/base64"
-	"fmt"
 	"strings"
 	"time"
 
@@ -28,7 +27,7 @@ func (s *Service) SetNewPassword(ctx context.Context, input *SetNewPasswordInput
 
 	decode, err := base64.StdEncoding.DecodeString(tempCode)
 	if err != nil {
-		fmt.Print("error:", err)
+		return nil, errors.InternalServer{Msg: "Could not format temp code", Err: err}
 	}
 
 	elements := strings.Split(string(decode), "|")
