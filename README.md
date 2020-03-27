@@ -95,16 +95,16 @@ team env set -s "development" -n "LOG_LEVEL" -v "debug"
 team env set -s "production" -n "LOG_LEVEL" -v "info"
 
 # Set firebase project id:
-team env set -s "development" -n "FIREBASE_PROJECT_ID" -v "abiboy-dev-xxxxx"
-team env set -s "production" -n "FIREBASE_PROJECT_ID" -v "abiboy-prod-zzzzz"
+team env set -s "development" -n "FIREBASE_PROJECT_ID" -v "apiboy-dev-xxxxx"
+team env set -s "production" -n "FIREBASE_PROJECT_ID" -v "apiboy-prod-zzzzz"
 
 # Set firebase api key:
 team env set -s "development" -n "FIREBASE_API_KEY" -v "XXXXXXXXXX"
 team env set -s "production" -n "FIREBASE_API_KEY" -v "ZZZZZZZZZZ"
 
 # Set jwt issuer:
-team env set -s "development" -n "JWT_ISSUER" -v "abiboy-dev"
-team env set -s "production" -n "JWT_ISSUER" -v "abiboy-prod"
+team env set -s "development" -n "JWT_ISSUER" -v "apiboy-dev"
+team env set -s "production" -n "JWT_ISSUER" -v "apiboy-prod"
 
 # Set jwt sign key:
 team env set -s "development" -n "JWT_SIGN_KEY" -v "XXXXXXXXXX"
